@@ -38,9 +38,24 @@ function addLike(e) {
         counter.textContent = parseInt(counter.textContent) + 1
     }
 }
+function setBg () {
+    btn.style.background = btn.style.background === 'red' ? 'green' : 'red'
+}
+btn.addEventListener('mouseup' , setBg )
+btn.addEventListener('mousedown' , setBg )
 btn.addEventListener('click', addLike)
 // !!!!!!!!!!!!!!!! вопрос хочу чтобы при нажатии и удержании кнопки мыши кнопка с лайками была например красного цвета. как только нажатую кнопку мыши отпустили . она вернулась первоначальное состояни
 // ---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51,36 +66,44 @@ btn.addEventListener('click', addLike)
 
 let dataOutput = document.querySelector('#dataOutput')
 let keyboardContainer = document.querySelector('#keyboardContainer')
-let regexp = new RegExp ('\\d', '')              // почему с флагом g не работает?   создадим регулярное выражение для отсева цифр 
-let rez
 
-function getOutputResult(e) {
-    if(!e.target.closest('span')) {               // делегирование
+function onCalcButtonClick(e) {
+    if(!e.target.dataset.value) {              
         return
     }
 
-    let selectedButton = e.target.dataset.value
+    let userAction = e.target.dataset.value
+    let inNumberAction = /\d/.test(userAction)
+    let inOperationAction = /[+-/*]/.test(userAction)
+    let inRezultAction = /[=]/.test(userAction)
 
-    if(regexp.test(selectedButton)) {             // отсортеруем цифры 
-        dataOutput.textContent += selectedButton  // сформируем из цифр число и содовим в dataOutput
-    } 
-
-
-
-
-    switch (true) {
-        case selectedButton == "+":
-
-        break
-    }
-
-    if(selectedButton == "=") {
-        console.log(rez )
-
-    }
+    if(inNumberAction) {
+        handelUerNumberAction(e.target.dataset.value)
+    } else if (inOperationAction) 
 
 }
-keyboardContainer.addEventListener('click', getOutputResult)
+keyboardContainer.addEventListener('click', onCalcButtonClick)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // не удалось.
 //////////////////////////////////////////////////////////////
